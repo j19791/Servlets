@@ -42,8 +42,88 @@ Projeto do curso Servlets da Alura
 	- devolve a resposta via fluxo binário (PDF, imagem) ou getWriter() p/ devolver HTML
 	- getWriter() devolve um PrintWriter (java.io) c/ exceção checked
 	- `out.println("<html>")` devolve conteúdo textual p/ o navegador
+	
+	
+### Passando parâmetros p/ o Servlet
+- New > Servlet (ver NovaEmpresaServlet.java)
+	- URL Mappings: /novaEmpresa
+- http://localhost:8080/gerenciador/novaEmpresa?nome=Alura (parâmetro visível na url)
+- ler o novo parâmetro enviado a partir da requisição `request.getParameter("nome")` que devolve uma String
+- método GET (padrão) da requisição : enviar informações e receber resultados
+- método POST: enviar informações p/ o servidor alterando os dados
+- formulário html `<form action="/gerenciador/novaEmpresa" method="post">` ver arquivo formNovaEmpresa.html
+- c/ POST o parâmetro não será exibido na URL
+- servidor não deverá permitir requisição c/ GET (ex: login c/ senha)
+	- usar `doPost()` no lugar de `service()`
+	- caso o usuário tente utilizar parametros na url que mapeia p/ NovaEmpresaServlet.java, será retornado o status 405 - método da requisição não é permitido pelo servidor.
+	
+### Modelo
+- Empresa.java
+- no servlet NovaEmpresaServlet, passar o parâmetro p/ um novo objeto Empresa `Empresa empresa = new Empresa();empresa.setNome(nomeEmpresa);` 
+- Banco.java: simular um acesso ao BD (na verdade, uma lista estática): `Banco banco = new Banco();banco.adiciona(empresa);`
+
+### Listando Empresas
+- criar servlet ListaEspresasServlet, mapear c/ /listaEmpresas e usar `doGet()`
+- coletaremos a List de Empresa do Banco `Banco banco = new banco();List<Empresa> lista = banco.getEmpresas();`
+- realizar um laço da List coletada e incluir na resposta  
+```html
+out.println("<ul>");
+for (Empresa empresa : lista) {
+out.println("<li>" + empresa.getNome() + "</li>");
+}
+out.println("</ul>");
+```
+
+### JSP
+- Não é uma boa prática possuir código de interface e visualização HTML dentro de uma classe.
+- usar novaEmpresaCriada.jsp
+- JSP: transformará a página HTML em algo dinâmico, que permite algumas ações de programação
+- scriptlet
+```java
+<%
+String nomeEmpresa = "Alura";
+System.out.println(nomeEmpresa);
+%>
+<html><body>
+Empresa " + <% out.println(nomeEmpresa); %> + " cadastrada com sucesso!
+</body></html>
+```
+- Quando alteramos um arquivo JSP não precisamos reiniciar o servidor
+- usar `<%= (nomeEmpresa); %>` para simplificar
+
+### Despachando a Requisição do Servlet p/ uma página JSP
+- criar uma conexão entre o Servlet e o JSP, para o JSP enviar a resposta ao navegador
+- separação de responsabilidades
+```java
+RequestDispatcher rd = request.getRequestDispatcher("/novaEmpresaCriada");
+request.setAttribute("empresa", empresa.getNome()); //empresa é o apelido q será usado no JSP
+rd.forward(request, response);
+```
+- no  JSP:  `String nomeEmpresa = (String)request.getAttribute("empresa");`
+- encoding de como interpretar os caracteres `<% page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>`
+- pode ser enviado aoplado uma lista para uma JSP `request.setAttribute("empresas", lista);`
+- importar no JSP `<% page import=page import="java.util.List, br.com.alura.gerenciador.servlet.Empresa"%>`
+- criando um laço no JSP
+```java
+<%
+List<Empresa> lista = (List<Empresa>)request.getAttribute("empresas");
+for (Empresa empresa : lista) {
+%>
+<li><%= empresa.getNome() %></li>
+<%
+}
+%>
+
+```
+
 
 ### Sequencia de implementações
 - bem-vindo.html
 - OiMundoServlet.java
-
+- NovaEmpresaServlet.java
+- formNovaEmpresa.html
+- Empresa.java
+- Banco.java
+- ListaEmpresasServlet.java
+- novaEmpresaCriada.jsp
+- listaEmpresas.jsp
