@@ -32,7 +32,7 @@ Projeto do curso Servlets da Alura
 
 ### Servlet
 - Protocolo http: navegador (requisiçao) e servidor (resposta)
-- objeto chamado via HTTP, executado para gerar uma resposta HTTP dinâmica
+- objeto chamado via requisição HTTP, executado para gerar uma resposta HTTP dinâmica
 - implementação: ver OiMundoServlet.java
 	- extender usando HttpServlet
 	- sobrescrever o método q atende uma requisição HTTP: service()
@@ -177,6 +177,86 @@ request.setAttribute("empresa", empresa.getNome());
 response.sendRedirect(listaEmpresas);
 ```
 
+### Removendo 
+- navegador precisa enviar como parâmetro o id da empresa a ser removida
+- `<a href="/gerenciador/removeEmpresa?id=${empresa.id}">remove</a>`
+- pegar no Servlet o id e direcionar p/ lista
+```
+String paramId = request getParameter("id");
+Integer id = Integer.valueof(paramId);
+Banco banco = new Banco();
+banco.removeEmpresa(id);
+response.sendRedirect("listaEmpresas");
+```
+
+### Editando
+- carregar os dados da empresa antes de serem editados
+- `<a href="/gerenciador/mostraEmpresa?id=${empresa.id}">editar</a>`
+```java
+//MostraEmpresaServlet.java
+	String paramId = request.getParameter("id");
+	Integer id = Integer.valueOf(paramId);
+	Banco banco = new Banco();
+	Empresa empresa = banco.buscaEmpresaPelaId(id);
+	request.setAttribute("empresa", empresa);
+	RequestDispatcher rd = request.getRequestDispatcher("/formAlteraEmpresa.jsp");
+	rd.foward(request, response);
+
+//Banco
+public Empresa buscaEmpresaPelaId(Integer id) {
+	for (Empresa empresa: lista) {
+		if(empresa.getId() == id){
+			return empresa;
+		}
+	}
+return null;
+}
+
+//formAlteraEmpresa.jsp
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="fmt" %>
+Nome: <input type="text" name="nome" value="${empresa.nome}" />
+Data Abertura: <input type="text" name="data" value="<fmt:formatDate value="${empresa.dataAbertudataAbertura}" pattern="dd/MM/yyyy"/>
+<input type="hidden" name="id" value="${empresa.id }">
+
+//AlteraEmpresaServlet
+//doPost dados serão enviados diretamente no corpo da requisição e não por meio dos parâmetros.
+
+String nomeEmpresa = request.getParameter("nome");
+String paramDataEmpresa = request.getParameter("data");
+
+Date dataAbertura = null;
+try {
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+dataAbertura = sdf.parse(paramDataEmpresa);
+} catch (ParseException e) {
+throw new ServletException(e);
+}
+
+Banco banco = new Banco();
+Empresa empresa = banco.buscaEmpresaPelaId(id);
+empresa.setNome(nomeEmpresa);
+empresa.setDataAbertura(dataAbertura);
+
+response.sendRedirect("listaEmpresas");
+```
+
+### web.xml
+- dentro de WebContent/WEB-INF
+```xml
+<welcome-file-list>
+<welcome-file>bem-vindo.html</welcome-file>
+</welcome-file-list>
+
+```
+
+### Inversão de controle - IOC Inversion Of Control.
+- não tempos main() no projeto
+- TomCat cria o main() (servlet container)
+- middleware: Tomcat realiza o papel intermediário entre o navegador e objeto 
+- O Tomcat só criará o objeto quando ele for completamente necessário.
+- apesar das diversas requisições, o Tomcat criA apenas uma instância do Servlet e evocou uma única vez o construtor. O objeto sempre FIca em memória e esse objeto é reaproveitado nas próximas requisições.
+- Servlet é chamado de singleton, um escopo, que sobrevive no projeto por tempo indeterminado enquanto o Tomcat estiver no ar, sem nunca recriá-lo
+- O escopo é aquilo que determina quanto tempo vive um objeto,
 
 ### Sequencia de implementações
 - bem-vindo.html
@@ -190,5 +270,7 @@ response.sendRedirect(listaEmpresas);
 - listaEmpresas.jsp
 - novaEmpresaCriada.jsp
 - formNovaEmpresa.jsp
-
-:
+- RemoveEmpresaServlet.java
+- MostraEmpresaServlet.java
+- formAlteraEmpresa.jsp
+- AlteraEmpresaServlet.java
