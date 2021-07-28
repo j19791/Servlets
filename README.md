@@ -256,7 +256,12 @@ response.sendRedirect("listaEmpresas");
 - O Tomcat só criará o objeto quando ele for completamente necessário.
 - apesar das diversas requisições, o Tomcat criA apenas uma instância do Servlet e evocou uma única vez o construtor. O objeto sempre FIca em memória e esse objeto é reaproveitado nas próximas requisições.
 - Servlet é chamado de singleton, um escopo, que sobrevive no projeto por tempo indeterminado enquanto o Tomcat estiver no ar, sem nunca recriá-lo
-- O escopo é aquilo que determina quanto tempo vive um objeto,
+- O escopo é aquilo que determina quanto tempo vive um objeto
+
+### Controlador
+- separar em camadas o servlet e o modelo
+- controlador único servlet que recebe todas as requisições e redireciona p/ um objeto + específico
+- nas urls, enviar parametro acao que especifica para o controlador a delegação adequada
 
 ### Sequencia de implementações
 - bem-vindo.html
@@ -274,3 +279,5 @@ response.sendRedirect("listaEmpresas");
 - MostraEmpresaServlet.java
 - formAlteraEmpresa.jsp
 - AlteraEmpresaServlet.java
+- pacote modelo
+- pacote acao

@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.alura.gerenciador.modelo.Banco;
+
 /**
  * Servlet implementation class RemoveEmpresaServlet
  */
-@WebServlet("/removeEmpresa")
+//@WebServlet("/removeEmpresa") agora esta usando controlador
 public class RemoveEmpresaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,7 +26,8 @@ public class RemoveEmpresaServlet extends HttpServlet {
 		Banco banco = new Banco();
 		banco.removeEmpresa(id);
 		
-		response.sendRedirect("listaEmpresas");
+		//response.sendRedirect("listaEmpresas");
+		response.sendRedirect("entrada?acao=ListaEmpresas"); //todos os links deverão usar agora o controlador
 		
 		
 	}
