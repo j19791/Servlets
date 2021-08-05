@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<c:import url="logout-parcial.jsp" />
+
 <!--<c:url value="/alteraEmpresa" var="linkServletAlteraEmpresa"/> utilizando controlador agora-->
 <c:url value="/entrada" var="linkServletUnicaEntrada"/>
 

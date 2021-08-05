@@ -267,24 +267,10 @@ response.sendRedirect("listaEmpresas");
 - jsp nunca deverá ser chamado diretamente na requisição. Esconder jsp na pasta WEB-INF (pasta não acessível pelo navegador)
 - jsp depende dos dados carregados pelo modelo/acao
 
+### Autenticação e autorização
+- login e senha (credenciais)
+- Servidor deverá se lembrar nas páginas que o usuário esta logado
+- cada requisição é isolada: os objetos de uma requisição não sobreviem a outra (redirect)
+- JSESSSIONID: usuário tem uma identificação gerada pelo servidor (cookie) na primeira requisição e devolvida para o navegador. Cada nova requisição desse mesmo navegador o servidor passa a reconhecer como o mesmo usuário nas novas requisições
+- HTTPSession - objeto associado ao cookie p/ ser usado dentro do código da app
 
-
-
-### Sequencia de implementações
-- bem-vindo.html
-- OiMundoServlet.java
-- NovaEmpresaServlet.java
-- formNovaEmpresa.html
-- Empresa.java
-- Banco.java
-- ListaEmpresasServlet.java
-- novaEmpresaCriada.jsp
-- listaEmpresas.jsp
-- novaEmpresaCriada.jsp
-- formNovaEmpresa.jsp
-- RemoveEmpresaServlet.java
-- MostraEmpresaServlet.java
-- formAlteraEmpresa.jsp
-- AlteraEmpresaServlet.java
-- pacote modelo
-- pacote acao

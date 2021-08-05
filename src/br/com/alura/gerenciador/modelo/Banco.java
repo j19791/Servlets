@@ -7,6 +7,7 @@ import java.util.List;
 public class Banco {
 
 	private static List<Empresa> lista = new ArrayList<>();
+	private static List<Usuario> listaUsuarios = new ArrayList<>();
 	private static Integer chaveSequencial = 1; 
 	
 	//qdo a maquina virtual carrega a classe, o bloco static ja é executado
@@ -21,6 +22,17 @@ public class Banco {
 		
 		lista.add(e1);
 		lista.add(e2);
+		
+		Usuario u1 = new Usuario();
+		u1.setLogin("nico");
+		u1.setSenha("12345");
+		Usuario u2 = new Usuario();
+		u2.setLogin("ana");
+		u2.setSenha("12345");
+		
+		listaUsuarios.add(u1);
+		listaUsuarios.add(u2);
+		
 		
 	}
 	
@@ -44,17 +56,7 @@ public class Banco {
 			}
 		}
 		
-		
-		
-		
-		
-		/* da erro de concurrency-nao usar
-		for (Empresa empresa : lista) {
-			if(empresa.getId() == id) {
-				lista.remove(empresa);
-			}
-		}*/
-		
+	
 	}
 
 	public Empresa buscaEmpresa(Integer id) {
@@ -64,6 +66,19 @@ public class Banco {
 			}
 		}
 		return null;
+	}
+
+	public Usuario existeUsuario(String login, String senha) {
+	
+		for(Usuario usuario : listaUsuarios) {
+			if(usuario.ehIgual(login, senha)) {
+				return usuario;
+			}
+		}
+		
+		
+		return null;
+		
 	}
 
 	

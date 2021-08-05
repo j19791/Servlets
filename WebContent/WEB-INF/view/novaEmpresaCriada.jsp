@@ -22,6 +22,8 @@
 </head>
 <body>
 
+
+
 Empresa <% out.println(nomeEmpresa); %>  cadastrada c/ sucesso
 Empresa <%= nomeEmpresa %>  cadastrada c/ sucesso <!-- atalho p/ imprimir na tela do navegador -->
 

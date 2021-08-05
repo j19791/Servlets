@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-<%@ page import="java.util.List, br.com.alura.gerenciador.modelo.Empresa" %>
+<%@ page import="java.util.List, br.com.alura.gerenciador.modelo.Empresa,  br.com.alura.gerenciador.modelo.Usuario" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -17,6 +17,18 @@
 <title>Lista Empresas</title>
 </head>
 <body>
+
+	<c:import url="logout-parcial.jsp" /> <!-- o logout deverá estar em todos os jsp. P/ evitar o copiar e colar, utilizar o import  -->
+
+	<!-- o código abaixo esta em logout-parcial
+	<a href="entrada?acao=Logout"">Logout</a>
+	<br>
+	<br>
+	 -->
+	
+	Usuario logado: ${usuarioLogado.login } <!-- vai encontrar o usuario na session -->
+	<br>
+	<br>
 
 <ul>
 

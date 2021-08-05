@@ -7,6 +7,8 @@
 </head>
 <body>
 
+<c:import url="logout-parcial.jsp" />
+
 <c:url value="/entrada" var="linkServletUnico"/>
 
 <!-- contexto: gerenciador. Pode ser dinamico -->
