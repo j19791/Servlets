@@ -258,10 +258,17 @@ response.sendRedirect("listaEmpresas");
 - Servlet é chamado de singleton, um escopo, que sobrevive no projeto por tempo indeterminado enquanto o Tomcat estiver no ar, sem nunca recriá-lo
 - O escopo é aquilo que determina quanto tempo vive um objeto
 
-### Controlador
+### Controlador (MVC)
 - separar em camadas o servlet e o modelo
 - controlador único servlet que recebe todas as requisições e redireciona p/ um objeto + específico
 - nas urls, enviar parametro acao que especifica para o controlador a delegação adequada
+- fluxo correto: requisição -> [controlador (acao)] -> modelo (bd) -> jsp (view)
+- as ações tbm fazem pt do contrador
+- jsp nunca deverá ser chamado diretamente na requisição. Esconder jsp na pasta WEB-INF (pasta não acessível pelo navegador)
+- jsp depende dos dados carregados pelo modelo/acao
+
+
+
 
 ### Sequencia de implementações
 - bem-vindo.html

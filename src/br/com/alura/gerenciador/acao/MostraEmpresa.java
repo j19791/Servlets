@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.alura.gerenciador.modelo.Banco;
 import br.com.alura.gerenciador.modelo.Empresa;
 
-public class MostraEmpresa {
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+public class MostraEmpresa implements Acao {
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 String paramId = request.getParameter("id");//sempre volta string
 		
@@ -22,10 +22,8 @@ String paramId = request.getParameter("id");//sempre volta string
 		
 		request.setAttribute("empresa", empresa); //joga o atributo dentro da requisição (apelido p/ ser usado no jsp, valor)
 		
-		//despachar a requisicção p/ frente (jsp). Nao fica mais na classe
-		RequestDispatcher rd = request.getRequestDispatcher("/formAlteraEmpresa.jsp");
-		
-		rd.forward(request, response);
+		//utilizando agora o direcionamento no contrador
+		return "forward:formAlteraEmpresa.jsp";
 	}
 
 }

@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.alura.gerenciador.modelo.Banco;
 import br.com.alura.gerenciador.modelo.Empresa;
 
-public class ListaEmpresas {
+public class ListaEmpresas implements Acao{
 
 	//codigo de listar encapsulado
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		List<Empresa> lista = new Banco().getEmpresas();
 		PrintWriter out = response.getWriter();
@@ -23,8 +23,12 @@ public class ListaEmpresas {
 		
 		
 		request.setAttribute("empresas", lista); //pendurou o objeto na requisicao
-		RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas.jsp");
-		rd.forward(request, response); //vai
+		
+		//transferindo p/ o controlador
+		//RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas.jsp");
+		//rd.forward(request, response); //vai
+		
+		return "forward:listaEmpresas.jsp";
 		
 		
 	}

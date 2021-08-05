@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.alura.gerenciador.modelo.Banco;
 
-public class RemoveEmpresa {
+public class RemoveEmpresa implements Acao{
 
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 String paramId = request.getParameter("id");//sempre volta string
 		
@@ -19,7 +19,8 @@ String paramId = request.getParameter("id");//sempre volta string
 		Banco banco = new Banco();
 		banco.removeEmpresa(id);
 		
-		response.sendRedirect("entrada?acao=ListaEmpresas");
+		//encaminhado de volta p/ o contrador
+		return "redirect:entrada?acao=ListaEmpresas";
 	}
 	
 }

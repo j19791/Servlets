@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.alura.gerenciador.modelo.Banco;
 import br.com.alura.gerenciador.modelo.Empresa;
 
-public class AlteraEmpresa {
+public class AlteraEmpresa implements Acao {
 
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		String paramId = request.getParameter("id");//sempre volta string
 				
@@ -41,8 +41,8 @@ public class AlteraEmpresa {
 		empresa.setDataAbertura(dataAbertura);
 
 
-		
-		response.sendRedirect("entrada?acao=ListaEmpresas");
+		//utilizando o redirecionamento p/ views no controlador
+		return "redirect: entrada?acao=ListaEmpresas";
 	}
 	
 }
