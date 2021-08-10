@@ -274,3 +274,13 @@ response.sendRedirect("listaEmpresas");
 - JSESSSIONID: usuário tem uma identificação gerada pelo servidor (cookie) na primeira requisição e devolvida para o navegador. Cada nova requisição desse mesmo navegador o servidor passa a reconhecer como o mesmo usuário nas novas requisições
 - HTTPSession - objeto associado ao cookie p/ ser usado dentro do código da app
 
+### Filtros
+- Interceptador (termo usado nos frameworks)
+- centralizar em único lugar ações que poderiam estar espalhadas pela app: medição de perfomance (monitoria), controle de transação, controle de acesso e permissões (usuário logado), tratamento de erro
+- o controlador não deverá assumir as responsabilidades acima: apenas redirecionamento
+- porta antes do controlador p/ filtrar requisições: fecha (para a execução) ou abre 
+- é quase igual ao servlet
+- pluga e depluga na app s/ alterar a aplicação
+- podem ter cários filtros diferentes, p/ uma tarefa especifica
+- com anotações não é possível definir a ordem de execução dos filtros: usar web.xml
+- usando o controlador como filtro: ele deverá ser o último filtro a ser chamado

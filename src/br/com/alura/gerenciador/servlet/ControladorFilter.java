@@ -2,28 +2,31 @@ package br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import br.com.alura.gerenciador.acao.Acao;
 
+/**
+ * Servlet Filter implementation class ControladorFilter
+ */
+//@WebFilter("/ControladorFilter") utilizadno web.xml
+public class ControladorFilter implements Filter {
 
-//@WebServlet("/entrada") utilizando ControladorFiltro
-public class UnicaEntradaServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String paramAcao = request.getParameter("acao");
+		System.out.println("ControladorFilter");
 		
-			 
+		HttpServletRequest request = (HttpServletRequest) servletRequest; //cast: interface + generica (ServletRequest) p/ uma mais especifica (HttpServletRequest)
+		HttpServletResponse response = (HttpServletResponse) servletResponse;	
 		
-		
+		String paramAcao = request.getParameter("acao");	
 		
 		String nomeClasse = "br.com.alura.gerenciador.acao." + paramAcao;
 		
@@ -50,9 +53,10 @@ public class UnicaEntradaServlet extends HttpServlet {
 		else //redirect		
 			response.sendRedirect(tipoEEndereco[1]); //navegador envia nova requisição
 		
-	}
-			
 		
+		//chain.doFilter(request, response); nao chama mais nenhum outro filtro
+	}
+
+	
+
 }
-
-

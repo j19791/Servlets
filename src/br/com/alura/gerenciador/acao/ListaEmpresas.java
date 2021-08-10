@@ -27,9 +27,7 @@ public class ListaEmpresas implements Acao{
 		
 		request.setAttribute("empresas", lista); //pendurou o objeto na requisicao
 		
-		//transferindo p/ o controlador
-		//RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas.jsp");
-		//rd.forward(request, response); //vai
+		
 		
 		return "forward:listaEmpresas.jsp";
 		
