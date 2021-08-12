@@ -284,3 +284,5 @@ response.sendRedirect("listaEmpresas");
 - podem ter cários filtros diferentes, p/ uma tarefa especifica
 - com anotações não é possível definir a ordem de execução dos filtros: usar web.xml
 - usando o controlador como filtro: ele deverá ser o último filtro a ser chamado
+
+### Web Services
